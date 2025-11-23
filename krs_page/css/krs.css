@@ -1,0 +1,260 @@
+    .table-container {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #ffffff;
+        margin-top: 20px;
+        border: 1px solid #eee;
+    }
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .custom-table thead tr {
+        background-color: #6f42c1;
+        color: #ffffff;
+        text-align: left;
+    }
+    .custom-table th, .custom-table td {
+        padding: 15px 20px;
+    }
+    .custom-table tbody tr {
+        border-bottom: 1px solid #f0f0f0;
+        transition: all 0.2s;
+    }
+    .custom-table tbody tr:nth-of-type(even) {
+        background-color: #fcfcfc;
+    }
+    .custom-table tbody tr:hover {
+        background-color: #f4eeff;
+    }
+    .action-btn {
+        text-decoration: none !important;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-right: 5px;
+        display: inline-block;
+    }
+    .btn-update {
+    background-color: #2196F3;   /* biru */
+    color: white;
+    padding: 8px 20px;           /* dibuat lebih panjang/pipih */
+    border-radius: 25px;         /* lebih lonjong */
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    }
+
+    .btn-update:hover {
+        background-color: #0d8ae5;
+    }
+
+    .btn-delete {
+        background-color: #ffb3c6;   /* pink lembut */
+        color: #c62828;              /* merah */
+        padding: 8px 20px;           /* dibuat lebih panjang/pipih */
+        border-radius: 25px;         /* lebih lonjong */
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .btn-delete:hover {
+        background-color: #ff9bb5;
+    }
+    .admin-form-container {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+        display: flex;
+        gap: 15px; 
+        align-items: center;
+        flex-wrap: wrap;
+        border: 1px solid #f0f0f0;
+    }
+
+    .form-input-custom {
+        padding: 12px 20px;
+        border: 2px solid #eee;
+        border-radius: 50px;
+        background-color: #f9f9f9;
+        color: #555;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s ease;
+        min-width: 220px; 
+    }
+
+    .form-input-custom:focus {
+        border-color: #6f42c1; 
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(111, 66, 193, 0.1);
+    }
+
+    .form-input-custom::placeholder {
+        color: #aaa;
+        font-style: italic;
+    }
+    .btn-add-new {
+        background: #5cb85c;
+        color: white !important;
+        padding: 12px 25px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-left: auto;
+    }
+    .btn-add-new:hover{
+      background: #2b842bff;
+    }
+
+    .student-card {
+        max-width: 500px;
+        margin: 40px auto; 
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(111, 66, 193, 0.15);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }  
+    .student-card:hover {
+        transform: translateY(-5px); 
+    }
+    .card-header-bg {
+        background: linear-gradient(135deg, #6f42c1, #8e44ad); 
+        padding: 40px 20px;
+        color: white;
+        position: relative;
+    }
+    .card-avatar {
+        font-size: 50px;
+        background: rgba(255,255,255,0.2);
+        width: 90px;
+        height: 90px;
+        line-height: 90px;
+        border-radius: 50%;
+        margin: 0 auto 15px auto;
+        border: 3px solid rgba(255,255,255,0.5);
+    }
+    .card-name {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 5px 0;
+        letter-spacing: 0.5px;
+    }
+    .card-nim {
+        font-size: 21px;
+        opacity: 0.9;
+        background: rgba(0,0,0,0.2);
+        padding: 4px 12px;
+        border-radius: 15px;
+        display: inline-block;
+    }
+    .card-body {
+        padding: 30px;
+        display: flex;
+        justify-content: space-around; 
+        align-items: center;
+        border-top: 1px solid #f0f0f0;
+    }
+    .card-item h4 {
+        font-size: 12px;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    .card-item p {
+        font-size: 18px;
+        font-weight: 700;
+        color: #333;
+        margin: 0;
+    }
+    
+    .divider {
+        width: 1px;
+        height: 40px;
+        background: #eee;
+    }
+    .alert-success { 
+      background-color: #d4edda; 
+      color: #155724; 
+      padding: 15px; 
+      border-radius: 10px; 
+      margin-bottom: 20px; 
+      border: 1px solid #c3e6cb; 
+      text-align: center; 
+    }
+    .alert-danger { 
+      background-color: #f8d7da; 
+      color: #721c24; 
+      padding: 15px; 
+      border-radius: 10px; 
+      margin-bottom: 20px; 
+      border: 1px solid #f5c6cb; 
+      text-align: center; 
+    }
+
+    .form-container-box {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    margin-top: 20px;
+    padding: 25px;
+    border: 1px solid #eee;
+    animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .form-container-box h3 {
+        margin-top: 0;
+        color: #6f42c1;
+    }
+
+    .form-container-box label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    .form-container-box input,
+    .form-container-box select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-top: 5px;
+    }
+
+    .form-container-box button {
+        margin-top: 20px;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .form-container-box button[type="submit"] {
+        background: #6f42c1;
+    }
+
+    .form-container-box button[type="button"] {
+        background: #dc3545;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
