@@ -7,7 +7,7 @@
         $user_id = $_POST['user_id'];
         $password = $_POST['password'];
 
-        $sqlMahasiswa = "SELECT m.*, u.* FROM mahasiswa m INNER JOIN users u ON m.userID = u.userID WHERE m.NIM = ? AND u.deletedAt IS NULL AND m.deletedAt IS NULL";
+        $sqlMahasiswa = "SELECT m.*, u.* FROM mahasiswa m INNER JOIN users u ON m.userID = u.userID WHERE m.NIM = ? AND u.deletedAt IS NULL AND m.deletedAt IS NULL AND u.user_role IS NOT NULL";
         $stmtMahasiswa = mysqli_prepare($conn, $sqlMahasiswa);
         mysqli_stmt_bind_param($stmtMahasiswa, "s", $user_id);
         mysqli_stmt_execute($stmtMahasiswa);

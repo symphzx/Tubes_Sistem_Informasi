@@ -8,15 +8,16 @@ include '../Database/config.php';
 if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
 }
-if (isset($_POST['nama']) && isset($_POST['password']) && isset($_POST['alamat'])) {
+if (isset($_POST['nama']) && isset($_POST['password']) && isset($_POST['alamat']) && isset($_POST['prodi'])) {
     $nama = $_POST['nama'];
     $password = $_POST['password'];
     $alamat = $_POST['alamat'];
+    $prodi = $_POST['prodi'];
 
     if (empty($nama) || empty($password) || empty($alamat)) {
         echo "Data tidak boleh kosong.";
     } else {
-        if (addUser($nama, $password, $alamat)) {
+        if (addUser($nama, $password, $alamat, $prodi)) {
             header('Location:../Login_page/login-Form.php');
             // echo "Data berhasil disimpan.";
         } else {
@@ -24,7 +25,7 @@ if (isset($_POST['nama']) && isset($_POST['password']) && isset($_POST['alamat']
         }
     }
 }
-function addUser($nama, $password, $alamat)
+function addUser($nama, $password, $alamat, $prodi)
 {
     global $conn;
     global $keyDecrypt;
@@ -34,7 +35,36 @@ function addUser($nama, $password, $alamat)
     $newUserID = generate_uuid_v4(); // generate uuid
     $newPassword = password_hash($password, PASSWORD_BCRYPT);
     $stmt->bind_param("ssss", $newUserID, $newNama, $newPassword, $alamat);
-    if ($stmt->execute()) {
+
+    $sql_nim = "SELECT NIM FROM mahasiswa ORDER BY NIM ASC";
+            $stmtNIM = mysqli_prepare($conn, $sql_nim);
+            mysqli_stmt_execute($stmtNIM);
+            $result = mysqli_stmt_get_result($stmtNIM);
+
+            if (mysqli_num_rows($result) > 0) {
+                $total = mysqli_num_rows($result);
+                $index = 0;
+                while ($row_nim = mysqli_fetch_assoc($result)) {
+                    $index++;
+
+                    if ($index == $total) {
+                        $nim = $row_nim['NIM'] + 1;
+                    }
+                }
+            }
+    $sql_prodi = "SELECT Kd_Prodi FROM prodi WHERE Nama_Prodi = '$prodi'";
+    $stmtProdi = mysqli_prepare($conn, $sql_prodi);
+    mysqli_stmt_execute($stmtProdi);
+    $result = mysqli_stmt_get_result($stmtProdi);
+    $row_prodi = mysqli_fetch_assoc($result);
+    $prodi = $row_prodi['Kd_Prodi'];
+    
+    $sql_mhs = "INSERT INTO mahasiswa(NIM,Prodi,userID) VALUES(?,?,?)";
+    $stmtMhs = mysqli_prepare($conn, $sql_mhs);
+    $stmtMhs->bind_param("sss", $nim, $prodi, $newUserID);
+    $stmt->execute();
+    $stmt-> close();
+    if ($stmtMhs->execute()) {
         // echo "Berhasil";
         return true;
     } else {

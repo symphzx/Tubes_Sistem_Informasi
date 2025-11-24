@@ -24,7 +24,7 @@
 
           if (checkRoleByCookie()) {
             if (isset($_POST['reset']) && $_POST['reset'] == "reset") {
-              $result_reset = mysqli_query($conn, "SELECT u.userID, mhs.NIM, u.nama, mhs.Prodi, u.alamat FROM users u INNER JOIN mahasiswa mhs ON u.userID = mhs.userID WHERE mhs.deletedAt IS NULL ORDER BY mhs.nim ASC");
+              $result_reset = mysqli_query($conn, "SELECT u.userID, mhs.NIM, u.nama, mhs.Prodi, u.alamat FROM users u INNER JOIN mahasiswa mhs ON u.userID = mhs.userID WHERE mhs.deletedAt IS NULL AND u.user_role = 'Mahasiswa' ORDER BY mhs.nim ASC");
               echo "<div class='table-container'><table class='custom-table'><thead><tr><th>NIM</th><th>Nama</th><th>Prodi</th><th>Alamat</th><th></th></tr></thead><tbody>";
               while ($row = mysqli_fetch_array($result_reset)) {
                 $nama = decryptFunc($row['nama'], $keyDecrypt);
@@ -42,7 +42,7 @@
               $nim_search = $_POST['nim_search'];
   
                   if ($nama_search == "") {
-                    $sql_search = "SELECT u.userID, mhs.NIM, u.nama, mhs.Prodi, u.alamat FROM users u INNER JOIN mahasiswa mhs ON u.userID = mhs.userID WHERE mhs.NIM LIKE ? AND mhs.deletedAt IS NULL";
+                    $sql_search = "SELECT u.userID, mhs.NIM, u.nama, mhs.Prodi, u.alamat FROM users u INNER JOIN mahasiswa mhs ON u.userID = mhs.userID WHERE mhs.NIM LIKE ? AND mhs.deletedAt IS NULL AND u.user_role = 'Mahasiswa' ORDER BY mhs.nim ASC";
                     $stmt_search = mysqli_prepare($conn, $sql_search);
                     $searchLikeNIM = "%" . $nim_search . "%";
                     mysqli_stmt_bind_param($stmt_search, "s", $searchLikeNIM);
@@ -63,7 +63,7 @@
                     exit;
       
                   } else if ($nim_search == "") {
-                          $sqlSrc_nama = "SELECT u.*, m.* FROM users u INNER JOIN mahasiswa m on u.userID = m.userID WHERE m.deletedAt IS NULL";
+                          $sqlSrc_nama = "SELECT u.*, m.* FROM users u INNER JOIN mahasiswa m on u.userID = m.userID WHERE m.deletedAt IS NULL AND u.user_role = 'Mahasiswa' ORDER BY m.nim ASC";
                           $result_search_nama = mysqli_query($conn, $sqlSrc_nama);
                           echo "<div class='table-container'><table class='custom-table'><thead><tr><th>NIM</th><th>Nama</th><th>Prodi</th><th>Alamat</th><th></th></tr></thead><tbody>";
                           while ($row_nama_search = mysqli_fetch_array($result_search_nama)) {
@@ -82,7 +82,7 @@
                         }
   
             } else {
-              $sql = "SELECT u.userID, mhs.NIM, u.nama, mhs.Prodi, u.alamat FROM users u INNER JOIN mahasiswa mhs ON u.userID = mhs.userID WHERE mhs.deletedAt IS NULL ORDER BY mhs.nim ASC";
+              $sql = "SELECT u.userID, mhs.NIM, u.nama, mhs.Prodi, u.alamat FROM users u INNER JOIN mahasiswa mhs ON u.userID = mhs.userID WHERE mhs.deletedAt IS NULL AND u.user_role = 'Mahasiswa' ORDER BY mhs.nim ASC";
               $result = mysqli_query($conn, $sql);
               echo "<div class='table-container'><table class='custom-table'><thead><tr><th>NIM</th><th>Nama</th><th>Prodi</th><th>Alamat</th><th></th></tr></thead><tbody>";
               while ($row = mysqli_fetch_array($result)) {
@@ -103,7 +103,7 @@
               exit;
             }
             $id = $_COOKIE['userID'];
-            $sql = "SELECT u.userID, mhs.NIM, u.nama, mhs.Prodi, u.alamat FROM users u INNER JOIN mahasiswa mhs ON u.userID = mhs.userID WHERE u.userID = '$id'";
+            $sql = "SELECT u.userID, mhs.NIM, u.nama, mhs.Prodi, u.alamat FROM users u INNER JOIN mahasiswa mhs ON u.userID = mhs.userID WHERE u.userID = '$id' AND mhs.deletedAt IS NULL AND u.user_role = 'Mahasiswa' ORDER BY mhs.nim ASC";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_array($result);
           

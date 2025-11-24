@@ -33,6 +33,47 @@
 
 </head>
 <style>
+		/* .input100 {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: none;
+    width: 100%;
+    padding: 0 10px;
+	} */
+
+	select.input100 {
+		cursor: pointer;
+	}
+	.select100 {
+		width: 100%;
+		height: 55px; /* samakan dengan input100 */
+		border: none;
+		outline: none;
+		background: transparent;
+		font-size: 16px;
+		padding: 0 20px;
+		appearance: none; /* hilangkan default arrow browser */
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		line-height: 55px; /* agar teks tepat di tengah */
+	}
+
+	/* .wrap-input100 {
+    position: relative;
+	} */
+
+	/* .wrap-input100::after {
+		content: "▼";
+		position: absolute;
+		right: 20px;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 14px;
+		color: #888;
+		pointer-events: none;
+	} */
 
 </style>
 
@@ -51,6 +92,23 @@
 						<input class="input100" type="text" name="nama">
 						<span class="focus-input100"></span>
 						<span class="label-input100">Name</span>
+					</div>
+					<div class="wrap-input100 validate-input">
+						<select class="select100" name="prodi" required>
+							<option value="">-- Pilih Prodi --</option>
+					
+							<?php 
+								include '../Database/connection.php';
+								$sqlProdi = "SELECT Nama_Prodi FROM prodi ORDER BY Nama_Prodi ASC";
+								$resultProdi = mysqli_query($conn, $sqlProdi);
+								while ($row = mysqli_fetch_assoc($resultProdi)) : ?>
+									<option value="<?= $row['Nama_Prodi']; ?>">
+										<?= $row['Nama_Prodi']; ?>
+									</option>
+							<?php endwhile; ?>
+						</select>
+						<span class="focus-input100"></span>
+						<span class="label-input100" style="top : -1px; ">Prodi</span>
 					</div>
 					<div class="wrap-input100 validate-input">
 						<input class="input100" type="text" name="alamat">
