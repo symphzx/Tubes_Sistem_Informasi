@@ -413,7 +413,7 @@
                           FROM nilai n 
                           JOIN matkul mk ON n.Kd_Matkul = mk.Kd_Matkul 
                           JOIN mahasiswa m ON n.NIM = m.NIM 
-                          WHERE m.userID = ? AND n.deletedAt IS NULL";
+                          WHERE m.userID = ? AND n.deletedAt IS NULL AND n.Nilai IS NOT NULL";
 
               $stmt = mysqli_prepare($conn, $sql);
               mysqli_stmt_bind_param($stmt, "s", $id);
