@@ -353,29 +353,45 @@
             $id = $_COOKIE['userID'];
             if (checkRoleByCookie()) {
               ?>
-              <script>
-                function searchData(reset) {
-                  let name = encodeURIComponent(document.getElementById("searchName").value)
-                  let nim = encodeURIComponent(document.getElementById("searchNIM").value);
-
-                  var xmlhttp = new XMLHttpRequest();
-                  xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                      document.getElementById("data").innerHTML = xmlhttp.responseText;
-                    }
-                  }
-                  xmlhttp.open("GET", "../search_trans.php?name=" + name + "&nim=" + nim + "&reset=" + reset, true);
-                  xmlhttp.send();
-                }
-              </script>
 
               <div id="search">
-                <input type="text" name="name" placeholder="Name" id="searchName">
-                <input type="text" name="nim" placeholder="NIM" id="searchNIM">
+                <input type="text" name="name" placeholder="Name" id="searchName" autocomplete="off">
+                <input type="text" name="nim" placeholder="NIM" id="searchNIM" autocomplete="off">
                 <button onclick="searchData()">Search</button>
                 <button onclick="searchData('reset')">Reset</button>
               </div>
 
+              <script>
+                function searchData(reset) {
+
+                // Jika tombol reset ditekan
+                if (reset === 'reset') {
+                  document.getElementById("searchName").value = "";
+                  document.getElementById("searchNIM").value = "";
+                }
+
+                let name = encodeURIComponent(document.getElementById("searchName").value);
+                let nim = encodeURIComponent(document.getElementById("searchNIM").value);
+
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("data").innerHTML = xmlhttp.responseText;
+                  }
+                }
+                xmlhttp.open("GET", "../search_trans.php?name=" + name + "&nim=" + nim + "&reset=" + reset, true);
+                xmlhttp.send();
+              }
+
+                // otomatis kosongkan input lain
+                document.getElementById("searchName").addEventListener("input", () => {
+                  if (searchName.value.trim() !== "") searchNIM.value = "";
+                });
+
+                document.getElementById("searchNIM").addEventListener("input", () => {
+                  if (searchNIM.value.trim() !== "") searchName.value = "";
+                });
+              </script>
 
               <?php
               $sql = "SELECT m.NIM, u.nama, u.userID FROM mahasiswa m JOIN users u ON m.userID = u.userID WHERE m.deletedAt IS NULL AND u.deletedAt IS NULL ORDER BY m.nim ASC";
