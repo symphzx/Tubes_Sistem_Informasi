@@ -434,11 +434,24 @@
                               </tr>
                             </thead>
                             <tbody>";
-
+              $ips = 0;
+              $na = 0;
+              $totalSKS = 0;
               while ($row = mysqli_fetch_array($result)) {
                 $nilai = decryptFunc($row['Nilai'], $keyDecrypt);
                 $grade = decryptFunc($row['Grade'], $keyDecrypt);
-
+                
+                if($grade = "A"){
+                  $na = 4;
+                }elseif ($grade = "B") {
+                  $na = 3;
+                }elseif ($grade = "C") {
+                  $na = 2;
+                }elseif ($grade = "D") {
+                  $na = 1;
+                }else{
+                  $na = 0;
+                }
                 echo "<tr>";
                 echo "<td>" . $row['Kd_Matkul'] . "</td>";
                 echo "<td>" . $row['Nama_Matkul'] . "</td>";
@@ -446,10 +459,14 @@
                 echo "<td>" . $nilai . "</td>";
                 echo "<td>" . $grade . "</td>";
                 echo "</tr>";
+                $ips += $na * $row['sks'];
+                $totalSKS += $row['sks'];
               }
             }
+            $ips = $ips / $totalSKS;
+            echo "</tbody></table> <h5 style='font-size: 20px'> Jumlah SKS : $totalSKS <br> <strong>IPS</strong> : $ips </h5> </div>";
 
-            echo "</tbody></table></div>";
+
             ?>
         <!-- <div class="row"> -->
         <!-- <div class="col-md-3 col-sm-6">

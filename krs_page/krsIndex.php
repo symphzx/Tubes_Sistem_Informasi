@@ -668,7 +668,22 @@
         form += "<label for='kd_matkul'>Pilih Mata Kuliah</label>";
         form += "<select name='new_kd_matkul' id='kd_matkul' required>";
 
-        form += "<?php $sql = 'SELECT Kd_Matkul, Nama_Matkul FROM matkul WHERE deletedAt IS NULL';
+
+        form += "<?php
+                $sqlProdi = "SELECT m.Prodi
+                                FROM mahasiswa m 
+                                INNER JOIN users u ON u.userID = m.userID 
+                                WHERE u.userID = ? AND m.deletedAt IS NULL"; // mendapatkan prodi dari cookie userID
+                $stmtProdi = mysqli_prepare($conn, $sqlProdi);
+                $stmtProdi->bind_param("s", $_COOKIE['userID']);
+                $stmtProdi->execute();
+                $resultProdi = $stmtProdi->get_result();
+                $mahasiswa = $resultProdi->fetch_assoc();
+
+                $prodi = $mahasiswa['Prodi'];
+
+
+                    $sql = 'SELECT Kd_Matkul, Nama_Matkul FROM matkul WHERE (Kd_Matkul LIKE \'%' . $prodi . '%\' OR Kd_Matkul LIKE \'%' . 'UM' . '%\') AND deletedAt IS NULL AND Kd_Matkul NOT IN (SELECT Kd_Matkul FROM nilai WHERE NIM = \'' . $nim . '\')';
                     $result = mysqli_query($conn, $sql);
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo '<option value=\"' . $row['Kd_Matkul'] . '\">' . $row['Kd_Matkul'] . ' - ' . $row['Nama_Matkul'] . '</option>';

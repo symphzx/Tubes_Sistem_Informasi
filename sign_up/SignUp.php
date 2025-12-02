@@ -18,7 +18,7 @@ if (isset($_POST['nama']) && isset($_POST['password']) && isset($_POST['alamat']
         echo "Data tidak boleh kosong.";
     } else {
         if (addUser($nama, $password, $alamat, $prodi)) {
-            header('Location:../Login_page/login-Form.php');
+            echo "<script>window.location.href = '../login_page/login-form.php';</script>";
             // echo "Data berhasil disimpan.";
         } else {
             echo "Data gagal disimpan.";
@@ -66,6 +66,9 @@ function addUser($nama, $password, $alamat, $prodi)
     $stmt-> close();
     if ($stmtMhs->execute()) {
         // echo "Berhasil";
+        echo "<script> 
+        alert('NIM Anda Adalah " . $nim . ".');
+        </script>";
         return true;
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
